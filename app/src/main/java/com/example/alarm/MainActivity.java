@@ -213,7 +213,10 @@ public class MainActivity extends AppCompatActivity {
                     adapter = new MyAdapter(mlist,MainActivity.this);
                     recyclerView.setAdapter(adapter);
 
-                    Toast.makeText(MainActivity.this, "added", Toast.LENGTH_SHORT).show();
+                    //When add button then 0 posiotion
+                    textView_medicinename.setText(medicine_name[0]);
+                    textView_when.setText(When[0]);
+                    textView_time.setText(Time[0]);
 
 
 
