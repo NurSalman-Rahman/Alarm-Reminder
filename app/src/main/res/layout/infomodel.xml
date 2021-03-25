@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+android:weightSum="5"
+    android:layout_marginTop="2dp"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+
+    <TextView
+        android:textColor="@color/teal_200"
+        android:layout_weight="1"
+        android:id="@+id/counttv_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="16sp"/>
+
+
+
+
+    <TextView
+
+
+        android:textColor="@color/teal_200"
+        android:layout_weight="1"
+        android:id="@+id/medinamenametv_id"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"/>
+
+    <TextView
+
+        android:textColor="@color/teal_200"
+        android:layout_weight="1"
+        android:id="@+id/whentv_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="16sp"/>
+
+    <TextView
+
+        android:textColor="@color/teal_200"
+        android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/timetv_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="16sp"/>
+
+    <ImageView
+        android:layout_weight="1"
+        android:id="@+id/deleteid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/delete"        >
+
+    </ImageView>
+</LinearLayout>
