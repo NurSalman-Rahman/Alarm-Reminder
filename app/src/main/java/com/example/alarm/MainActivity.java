@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     int t1Hour,t1Minute;
     Ringtone r;
     TextClock textClock;
-  //  Timer t = new Timer();
+    Timer t = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -303,11 +303,13 @@ public class MainActivity extends AppCompatActivity {
 
                         textView_alarm.setText(DateFormat.format("hh:mm aa",calendar));
 
-
-
+/*
+                             t.scheduleAtFixedRate(new TimerTask() {
+                            @Override
+                            public void run() {
                                 // Ringtone
 
-                                if (textView_alarm.getText().toString().trim().equals((textClock)))
+                                if (textClock.getText().toString().equals(textView_alarm))
 
                                 {
 
@@ -319,6 +321,8 @@ public class MainActivity extends AppCompatActivity {
                                     r.stop();
                                     Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
                                 }
+                            }
+                             },0,1000);*/
 
 
 
@@ -358,6 +362,9 @@ public class MainActivity extends AppCompatActivity {
         textView_medicinename = findViewById(R.id.spinnerid1);
         textView_when=findViewById(R.id.spinnerid2);
         textView_time =findViewById(R.id.spinnerid3);
+
+
+
 
 
     }
