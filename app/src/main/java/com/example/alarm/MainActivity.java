@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -31,6 +32,8 @@ import com.example.alarm.model.InformationAlarm;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
     int t1Hour,t1Minute;
     Ringtone r;
+    TextClock textClock;
+  //  Timer t = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +77,11 @@ public class MainActivity extends AppCompatActivity {
         intLisener();
         intSpinnerinfo();
         intMiddleStringChecker();
+
     }
 
- private void intMiddleStringChecker() {
+
+    private void intMiddleStringChecker() {
 
         String stringChecker;
         stringChecker = textView_alarm.getText().toString();
@@ -295,6 +302,23 @@ public class MainActivity extends AppCompatActivity {
                         // set selected time on text view
 
                         textView_alarm.setText(DateFormat.format("hh:mm aa",calendar));
+
+
+
+                                // Ringtone
+
+                                if (textView_alarm.getText().toString().trim().equals((textClock)))
+
+                                {
+
+                                    r.play();
+                                    Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_SHORT).show();
+
+                                }else
+                                {
+                                    r.stop();
+                                    Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                                }
 
 
 
