@@ -1,13 +1,20 @@
 package com.example.alarm;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,16 +23,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.alarm.adapter.MyAdapter;
 import com.example.alarm.model.InformationAlarm;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
     //Initialize Variable
+
+
 
     RecyclerView recyclerView;
     MyAdapter adapter;
@@ -35,9 +46,12 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<InformationAlarm>  mlist = new ArrayList<>();
 
     TextView textView_medicinename,textView_when,textView_time;
-    ImageView imageView_weathermoon,imageView_alarmdlt;
+    ImageView imageView_weathermoon,imageView_alarmdlt,imageView_weathersunny;
     TextView textView_alarm;
     Button button_add;
+
+    int t1Hour,t1Minute;
+    Ringtone r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +59,45 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
+
         recyclerView = findViewById(R.id.Recycle1);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
+
+        r = RingtoneManager.getRingtone(MainActivity.this,RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE));
 
 
         intFunction();
         intLisener();
         intSpinnerinfo();
+        intMiddleStringChecker();
     }
 
+ private void intMiddleStringChecker() {
+
+        String stringChecker;
+        stringChecker = textView_alarm.getText().toString();
+        String match_am = "am";
+     int position_am = stringChecker.indexOf(match_am);
+
+     if(position_am >-1){
+         imageView_weathermoon.setBackgroundDrawable(getResources().getDrawable(R.drawable.sunny));
+
+     }
+     else {
+         imageView_weathermoon.setBackgroundDrawable(getResources().getDrawable(R.drawable.moon));
+
+     }
+
+     //    String match_pm = "pm";
+
+//        int position_pm = stringChecker.indexOf(match_pm);
+
+    // Log.d("intMiddleStringChecker", "intMiddleStringChecker: "+position_am + " "+position_pm);
+
+
+    }
 
 
     //All Spinner array list
@@ -213,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                     adapter = new MyAdapter(mlist,MainActivity.this);
                     recyclerView.setAdapter(adapter);
 
-                    //When add button then 0 posiotion
+                    //When add button then 0 posiotionst
                     textView_medicinename.setText(medicine_name[0]);
                     textView_when.setText(When[0]);
                     textView_time.setText(Time[0]);
@@ -224,6 +267,58 @@ public class MainActivity extends AppCompatActivity {
                 }
             }});
 
+
+
+        // 09.00 am alarm click
+        textView_alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Initialize time picker
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                        // Initialize hour and minute
+
+                        t1Hour = hourOfDay;
+                        t1Minute = minute;
+
+                        //Initialize Calender
+                        Calendar calendar = Calendar.getInstance();
+
+                        //set hour and minute
+
+                        calendar.set(0,0,0,t1Hour,t1Minute);
+
+                        // set selected time on text view
+
+                        textView_alarm.setText(DateFormat.format("hh:mm aa",calendar));
+
+
+
+                        intMiddleStringChecker();
+
+
+
+
+                    }
+                },12,0,false);
+
+                 // Display previous selected time
+
+                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                timePickerDialog.updateTime(t1Hour,t1Minute);
+
+             timePickerDialog.show();
+
+            }
+        });
+
+
+
+
         }
 
 
@@ -233,7 +328,8 @@ public class MainActivity extends AppCompatActivity {
         imageView_weathermoon =findViewById(R.id.weathermoon_id);
         imageView_alarmdlt = findViewById(R.id.alamrdlt_id);
         button_add = findViewById(R.id.addbuttom_id);
-        textView_alarm = findViewById(R.id.alarm_id);
+        textView_alarm = findViewById(R.id.tv_timer1);
+
 
         textView_medicinename = findViewById(R.id.spinnerid1);
         textView_when=findViewById(R.id.spinnerid2);

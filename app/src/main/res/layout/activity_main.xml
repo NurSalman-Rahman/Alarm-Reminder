@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
 
 
@@ -24,17 +24,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:layout_marginRight="20dp"
                 android:id="@+id/weathermoon_id"
-                android:layout_weight="1"
+                android:layout_weight=".08"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/moon"
-                android:layout_width="24dp"
-                android:layout_height="24dp">
+                android:layout_width="15dp"
+                android:layout_height="20dp">
 
             </ImageView>
 
             <TextView
-                android:id="@+id/alarm_id"
+                android:layout_marginStart="5dp"
+
+                android:id="@+id/tv_timer1"
                 android:textAlignment="center"
                 android:layout_weight="1"
                 android:text="9.00pm"
@@ -47,7 +49,7 @@
 
             <ImageView
                 android:id="@+id/alamrdlt_id"
-                android:layout_weight="1"
+                android:layout_weight=".15"
                 android:src="@drawable/delete"
                 android:layout_width="24dp"
                 android:layout_height="24dp">
@@ -138,7 +140,12 @@
         </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
-
+<!--
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        tools:itemCount="4"
+        tools:listitem="@layout/model_main"
+        android:layout_height="wrap_content"/>-->
 
 
 
