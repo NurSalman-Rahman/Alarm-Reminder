@@ -24,7 +24,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -34,9 +33,6 @@ import com.example.alarm.model.InformationAlarm;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class MainActivity extends AppCompatActivity {
 
     //Initialize Variable
@@ -80,19 +76,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     }
 
-    private void intsetAlarm() {
+
+    private void intsetAlarm(int currentHour, int currentMinute) {
 
 
 
-        if (!textView_alarm.getText().toString().isEmpty())
-        {
 
             Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
-           // intent.putExtra(AlarmClock.EXTRA_HOUR,Integer.parseInt(textView_alarm.getText().toString()));
+             intent.putExtra(AlarmClock.EXTRA_HOUR,currentHour);
 
-            //intent.putExtra(AlarmClock.E,Integer.parseInt(textView_alarm.getText().toString()));
+         intent.putExtra(AlarmClock.EXTRA_MINUTES,currentMinute);
             intent.putExtra(AlarmClock.EXTRA_MESSAGE,"set alarm for walk ");
 
             if (intent.resolveActivity(getPackageManager()) !=null)
@@ -102,9 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(MainActivity.this, "there is no app support this action", Toast.LENGTH_SHORT).show();
             }
-        }else{
-            Toast.makeText(MainActivity.this, "choose time", Toast.LENGTH_SHORT).show();
-        }
 
     }
 
@@ -310,24 +303,23 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                        // Initialize hour and minute
+
 
                         Calendar calendar = Calendar.getInstance();
 
-                       // currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-                       // currentMinute = calendar.get(Calendar.MINUTE);
+
                         currentHour = hourOfDay;
 
                         currentMinute = minute;
 
-                        // Log.d("salman", "onTimeSet: done " +currentHour);
+                        Log.d("salman", "onTimeSet: done " +currentMinute);
 
 
                         //Initialize Calender
 
 
                         //set hour and minute
-                     Log.d("salman", "onTimeSet: " + currentHour);
+                        Log.d("salman", "onTimeSet: " + currentHour);
 
                         calendar.set(0,0 ,0,currentHour, currentMinute);
 
@@ -343,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
 
                         intMiddleStringChecker();
 
-                        intsetAlarm();
+                        intsetAlarm(currentHour,currentMinute);
 
 
                     }
@@ -353,7 +345,6 @@ public class MainActivity extends AppCompatActivity {
 
                 timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 timePickerDialog.updateTime(currentHour,currentMinute);
-
 
              timePickerDialog.show();
 
