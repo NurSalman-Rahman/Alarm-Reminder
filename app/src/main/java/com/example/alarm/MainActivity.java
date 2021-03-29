@@ -4,6 +4,7 @@ package com.example.alarm;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Ringtone;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.provider.AlarmClock;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
@@ -49,14 +51,13 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<InformationAlarm>  mlist = new ArrayList<>();
 
     TextView textView_medicinename,textView_when,textView_time;
-    ImageView imageView_weathermoon,imageView_alarmdlt,imageView_weathersunny;
+    ImageView imageView_weathermoon,imageView_alarmdlt;
     TextView textView_alarm;
     Button button_add;
 
-    int t1Hour,t1Minute;
-    Ringtone r;
-    TextClock textClock;
-    Timer t = new Timer();
+    int currentHour,currentMinute;
+    //int currentHour,currentMinute;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +71,40 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
 
-        r = RingtoneManager.getRingtone(MainActivity.this,RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE));
 
 
         intFunction();
         intLisener();
         intSpinnerinfo();
         intMiddleStringChecker();
+
+
+
+    }
+
+    private void intsetAlarm() {
+
+
+
+        if (!textView_alarm.getText().toString().isEmpty())
+        {
+
+            Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
+           // intent.putExtra(AlarmClock.EXTRA_HOUR,Integer.parseInt(textView_alarm.getText().toString()));
+
+            //intent.putExtra(AlarmClock.E,Integer.parseInt(textView_alarm.getText().toString()));
+            intent.putExtra(AlarmClock.EXTRA_MESSAGE,"set alarm for walk ");
+
+            if (intent.resolveActivity(getPackageManager()) !=null)
+            {
+                startActivity(intent);
+            }else {
+
+                Toast.makeText(MainActivity.this, "there is no app support this action", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(MainActivity.this, "choose time", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -91,18 +119,13 @@ public class MainActivity extends AppCompatActivity {
      if(position_am >-1){
          imageView_weathermoon.setBackgroundDrawable(getResources().getDrawable(R.drawable.sunny));
 
+
      }
      else {
          imageView_weathermoon.setBackgroundDrawable(getResources().getDrawable(R.drawable.moon));
 
+
      }
-
-     //    String match_pm = "pm";
-
-//        int position_pm = stringChecker.indexOf(match_pm);
-
-    // Log.d("intMiddleStringChecker", "intMiddleStringChecker: "+position_am + " "+position_pm);
-
 
     }
 
@@ -289,55 +312,48 @@ public class MainActivity extends AppCompatActivity {
 
                         // Initialize hour and minute
 
-                        t1Hour = hourOfDay;
-                        t1Minute = minute;
-
-                        //Initialize Calender
                         Calendar calendar = Calendar.getInstance();
 
-                        //set hour and minute
+                       // currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                       // currentMinute = calendar.get(Calendar.MINUTE);
+                        currentHour = hourOfDay;
 
-                        calendar.set(0,0,0,t1Hour,t1Minute);
+                        currentMinute = minute;
+
+                        // Log.d("salman", "onTimeSet: done " +currentHour);
+
+
+                        //Initialize Calender
+
+
+                        //set hour and minute
+                     Log.d("salman", "onTimeSet: " + currentHour);
+
+                        calendar.set(0,0 ,0,currentHour, currentMinute);
+
+
+
 
                         // set selected time on text view
 
-                        textView_alarm.setText(DateFormat.format("hh:mm aa",calendar));
-
-/*
-                             t.scheduleAtFixedRate(new TimerTask() {
-                            @Override
-                            public void run() {
-                                // Ringtone
-
-                                if (textClock.getText().toString().equals(textView_alarm))
-
-                                {
-
-                                    r.play();
-                                    Toast.makeText(MainActivity.this, "Done", Toast.LENGTH_SHORT).show();
-
-                                }else
-                                {
-                                    r.stop();
-                                    Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                             },0,1000);*/
+                       // textView_alarm.setText(DateFormat.format("hh:mm", calendar));
+                        textView_alarm.setText(DateFormat.format( "hh:mm:aa",calendar));
 
 
 
                         intMiddleStringChecker();
 
-
+                        intsetAlarm();
 
 
                     }
-                },12,0,false);
+                },0,0,false);
 
                  // Display previous selected time
 
                 timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                timePickerDialog.updateTime(t1Hour,t1Minute);
+                timePickerDialog.updateTime(currentHour,currentMinute);
+
 
              timePickerDialog.show();
 
